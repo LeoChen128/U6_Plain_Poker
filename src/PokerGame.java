@@ -296,6 +296,8 @@ public class PokerGame {
         if (Objects.equals(hand.getFirst(), "2")){
             numberToAdd += 0.2;
         }
+
+        // if the first card is 3, add 0.3, etc.
         handTypes.add(numberToAdd);
 
     }
