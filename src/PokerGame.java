@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PokerGame {
     String currentHand = " ";
@@ -7,10 +8,12 @@ public class PokerGame {
     List<Integer> numOfHands = new ArrayList<>();
     List<List<String>> rankOfHands;
     List<Integer> numOfNums;
-    List<Integer> handTypes = new ArrayList<>();
+    List<Double> handTypes = new ArrayList<>();
     int[] rankOfHands2;
     List<Integer> totalBids = new ArrayList<>();
     List<String[]> totalHands = new ArrayList<>();
+    List<List<String>> unorganizedHands = new ArrayList<>();
+    List<Integer> organizedHandTypes = new ArrayList<>();
 
 
     public PokerGame(int listLength){
@@ -24,15 +27,6 @@ public class PokerGame {
         rankOfHands = new ArrayList<>();
         numOfNums = new ArrayList<>();
         rankOfHands2 = new int[listLength];
-    }
-
-    public void addHand (String[] cards, int bid){
-        //this is where the hand gets added to the poker game
-        totalHands.add(cards);
-        totalBids.add(bid);
-        List<Integer> card = countCardAppearance(cards);
-        handType(card);
-
     }
 
     public List<Integer> countCardAppearance(String[] cards) {
@@ -52,28 +46,31 @@ public class PokerGame {
 
         return removeZero;
     }
-    public void handType(List<Integer> numOfNums){
-        if (checkFiveKind(numOfNums)){
-            return;
-        }
-        if (checkFourKind(numOfNums)){
-            return;
-        }
-        if (checkFullHouse(numOfNums)){
-            return;
-        }
-        if (checkThreeKind(numOfNums)){
-            return;
-        }
-        if (checkTwoPair(numOfNums)){
-            return;
-        }
-        if (checkOnePair(numOfNums)){
-            return;
-        }
-        checkHighCard(numOfNums);
-    }
-    public boolean checkFiveKind(List<Integer> numOfNums){
+
+
+//    public void handType(List<Integer> numOfNums){
+//        if (checkFiveKind(numOfNums)){
+//            return;
+//        }
+//        if (checkFourKind(numOfNums)){
+//            return;
+//        }
+//        if (checkFullHouse(numOfNums)){
+//            return;
+//        }
+//        if (checkThreeKind(numOfNums)){
+//            return;
+//        }
+//        if (checkTwoPair(numOfNums)){
+//            return;
+//        }
+//        if (checkOnePair(numOfNums)){
+//            return;
+//        }
+//        checkHighCard(numOfNums){
+//            return;
+//        };
+//  }
     public List<Integer> findNumOfNums(List<String> hand){
         int aceCount = 0;
         int kingCount = 0;
@@ -264,38 +261,43 @@ public class PokerGame {
         return Integer.parseInt(card);
     }
 
-    public Integer getType(){
+    public void getType(List<String> hand){
+        double numberToAdd = 0;
         int type = 0;
         if (checkFiveKind()){
             type = 7;
-            handTypes.add(7);
+            numberToAdd = 7;
         }
         else if (checkFourKind()){
             type = 6;
-            handTypes.add(6);
+            numberToAdd = 6;
         }
         else if (checkThreeKind()){
             type = 4;
-            handTypes.add(4);
+            numberToAdd = 4;
         }
         else if (checkFullHouse()){
             type = 5;
-            handTypes.add(5);
+            numberToAdd = 5;
         }
         else if (checkTwoPair()){
             type =  3;
-            handTypes.add(3);
+            numberToAdd = 3;
         }
         else if (checkOnePair()){
             type =  2;
-            handTypes.add(2);
+            numberToAdd = 2;
         }
         else if (checkHighCard()){
             type = 1;
-            handTypes.add(1);
+            numberToAdd = 1;
         }
 
-        return type;
+        if (Objects.equals(hand.getFirst(), "2")){
+            numberToAdd += 0.2;
+        }
+        handTypes.add(numberToAdd);
+
     }
 
 
@@ -305,22 +307,82 @@ public class PokerGame {
     // --------------------------------------------------------------------------------
 
 
-    public List<List<String>> rankHands(List<String> hand){
+    public void addToList(List<String> hand) {
 
-        if (rankOfHands.isEmpty()){
-            getType();
-            rankOfHands.add(hand);
-        }
-
-        else{
-            int currentType = getType();
-            handTypes.removeLast();
-            int counter = 0;
-            for (int type : handTypes){
-
-            }
-        }
-        return rankOfHands;
+        getType(hand);
+        unorganizedHands.add(hand);
     }
 
+    public void organizeListByType(){
+
+        if (handTypes.contains(7)){
+            while (handTypes.contains(7)){
+                int indexOfSeven = handTypes.indexOf(7);
+                handTypes.remove(indexOfSeven);
+                rankOfHands.add(unorganizedHands.get(indexOfSeven));
+                organizedHandTypes.add(7);
+            }
+        }
+
+        else if (handTypes.contains(6)){
+            while (handTypes.contains(6)){
+                int indexOfSix = handTypes.indexOf(6);
+                handTypes.remove(indexOfSix);
+                rankOfHands.add(unorganizedHands.get(indexOfSix));
+                organizedHandTypes.add(6);
+            }
+        }
+
+        else if (handTypes.contains(5)){
+            while (handTypes.contains(5)){
+                int indexOfFive = handTypes.indexOf(5);
+                handTypes.remove(indexOfFive);
+                rankOfHands.add(unorganizedHands.get(indexOfFive));
+                organizedHandTypes.add(5);
+            }
+        }
+
+        else if (handTypes.contains(4)){
+            while (handTypes.contains(4)){
+                int indexOfFour = handTypes.indexOf(4);
+                handTypes.remove(indexOfFour);
+                rankOfHands.add(unorganizedHands.get(indexOfFour));
+                organizedHandTypes.add(4);
+            }
+        }
+
+        else if (handTypes.contains(3)){
+            while (handTypes.contains(3)){
+                int indexOfThree = handTypes.indexOf(3);
+                handTypes.remove(indexOfThree);
+                rankOfHands.add(unorganizedHands.get(indexOfThree));
+                organizedHandTypes.add(3);
+            }
+        }
+
+        else if (handTypes.contains(2)){
+            while (handTypes.contains(2)){
+                int indexOfTwo = handTypes.indexOf(2);
+                handTypes.remove(indexOfTwo);
+                rankOfHands.add(unorganizedHands.get(indexOfTwo));
+                organizedHandTypes.add(2);
+            }
+        }
+
+
+        else if (handTypes.contains(1)){
+            while (handTypes.contains(1)){
+                int indexOfOne = handTypes.indexOf(1);
+                handTypes.remove(indexOfOne);
+                rankOfHands.add(unorganizedHands.get(indexOfOne));
+                organizedHandTypes.add(1);
+            }
+        }
+
+    }
+
+
+    public void organizeByCards(){
+
+    }
 }
