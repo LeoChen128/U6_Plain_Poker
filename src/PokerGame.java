@@ -5,7 +5,9 @@ public class PokerGame {
     String currentHand = " ";
     String mostRecentHand = " ";
     List<Integer> numOfHands = new ArrayList<>();
-    int[] rankOfHands;
+    List<List<String>> rankOfHands;
+    List<Integer> numOfNums;
+    List<Integer> handTypes = new ArrayList<>();
 
 
 
@@ -17,11 +19,86 @@ public class PokerGame {
         numOfHands.add(0);
         numOfHands.add(0);
         numOfHands.add(0);
-        rankOfHands = new int[listLength];
+        rankOfHands = new ArrayList<>();
+        numOfNums = new ArrayList<>();
 
     }
 
-    public boolean checkFiveKind(List<Integer> numOfNums){
+    public List<Integer> findNumOfNums(List<String> hand){
+        int aceCount = 0;
+        int kingCount = 0;
+        int queenCount = 0;
+        int jackCount = 0;
+        int tenCount = 0;
+        int nineCount = 0;
+        int eightCount = 0;
+        int sevenCount = 0;
+        int sixCount = 0;
+        int fiveCount = 0;
+        int fourCount = 0;
+        int threeCount = 0;
+        int twoCount = 0;
+
+        for (String card : hand){
+            if (card.equals("Ace")){
+                aceCount++;
+            }
+            else if (card.equals("King")){
+                kingCount++;
+            }
+            else if (card.equals("Queen")){
+                queenCount++;
+            }
+            else if (card.equals("Jack")){
+                jackCount++;
+            }
+            else if (card.equals("10")){
+                tenCount++;
+            }
+            else if (card.equals("9")){
+                nineCount++;
+            }
+            else if (card.equals("8")){
+                eightCount++;
+            }
+            else if (card.equals("7")){
+                sevenCount++;
+            }
+            else if (card.equals("6")){
+                sixCount++;
+            }
+            else if (card.equals("5")){
+                fiveCount++;
+            }
+            else if (card.equals("4")){
+                fourCount++;
+            }
+            else if (card.equals("3")){
+                threeCount++;
+            }
+            else if (card.equals("2")){
+                twoCount++;
+            }
+        }
+        numOfNums.add(aceCount);
+        numOfNums.add(kingCount);
+        numOfNums.add(queenCount);
+        numOfNums.add(jackCount);
+        numOfNums.add(tenCount);
+        numOfNums.add(nineCount);
+        numOfNums.add(eightCount);
+        numOfNums.add(sevenCount);
+        numOfNums.add(sixCount);
+        numOfNums.add(fiveCount);
+        numOfNums.add(fourCount);
+        numOfNums.add(threeCount);
+        numOfNums.add(twoCount);
+        return numOfNums;
+    }
+
+
+
+    public boolean checkFiveKind(){
         if (numOfNums.contains(5)){
             numOfHands.set(0, numOfHands.getFirst() + 1);
             mostRecentHand = currentHand;
@@ -31,7 +108,7 @@ public class PokerGame {
         return false;
     }
 
-    public boolean checkFourKind(List<Integer> numOfNums){
+    public boolean checkFourKind(){
         if (numOfNums.contains(4)){
             numOfHands.set(1, numOfHands.get(1) + 1);
             mostRecentHand = currentHand;
@@ -41,7 +118,7 @@ public class PokerGame {
         return false;
     }
 
-    public boolean checkFullHouse(List<Integer> numOfNums){
+    public boolean checkFullHouse(){
         if (numOfNums.contains(3)){
             if (numOfNums.contains(2)){
                 numOfHands.set(2, numOfHands.get(2) + 1);
@@ -53,7 +130,7 @@ public class PokerGame {
         return false;
     }
 
-    public boolean checkThreeKind(List<Integer> numOfNums){
+    public boolean checkThreeKind(){
         if (numOfNums.contains(3)) {
             if (numOfNums.contains(1)){
                 numOfHands.set(3, numOfHands.get(3) + 1);
@@ -65,7 +142,7 @@ public class PokerGame {
         return false;
     }
 
-    public boolean checkTwoPair(List<Integer> numOfNums){
+    public boolean checkTwoPair(){
         int numOfTwos = 0;
         for (int number : numOfNums){
             if (number == 2){
@@ -81,7 +158,7 @@ public class PokerGame {
         return false;
     }
 
-    public boolean checkOnePair(List<Integer> numOfNums){
+    public boolean checkOnePair(){
         int numOfTwos = 0;
         for (int number : numOfNums){
             if (number == 2){
@@ -97,7 +174,7 @@ public class PokerGame {
         return false;
     }
 
-    public boolean checkHighCard(List<Integer> numOfNums){
+    public boolean checkHighCard(){
         int numOfOnes = 0;
         for (int number : numOfNums){
             if (number == 1){
@@ -114,12 +191,63 @@ public class PokerGame {
     }
 
 
+    public Integer getType(){
+        int type = 0;
+        if (checkFiveKind()){
+            type = 7;
+            handTypes.add(7);
+        }
+        else if (checkFourKind()){
+            type = 6;
+            handTypes.add(6);
+        }
+        else if (checkThreeKind()){
+            type = 4;
+            handTypes.add(4);
+        }
+        else if (checkFullHouse()){
+            type = 5;
+            handTypes.add(5);
+        }
+        else if (checkTwoPair()){
+            type =  3;
+            handTypes.add(3);
+        }
+        else if (checkOnePair()){
+            type =  2;
+            handTypes.add(2);
+        }
+        else if (checkHighCard()){
+            type = 1;
+            handTypes.add(1);
+        }
+
+        return type;
+    }
+
+
 
     // --------------------------------------------------------------------------------
     // CHECKING PORTION OF CODE
     // --------------------------------------------------------------------------------
 
 
-    // public int rankOnHandType()
+    public List<List<String>> rankHands(List<String> hand){
+
+        if (rankOfHands.isEmpty()){
+            getType();
+            rankOfHands.add(hand);
+        }
+
+        else{
+            int currentType = getType();
+            handTypes.removeLast();
+            int counter = 0;
+            for (int type : handTypes){
+
+            }
+        }
+        return rankOfHands;
+    }
 
 }
