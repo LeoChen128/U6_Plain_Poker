@@ -6,7 +6,8 @@ public class PokerGame {
     String mostRecentHand = " ";
     List<Integer> numOfHands = new ArrayList<>();
     int[] rankOfHands;
-
+    List<Integer> totalBids = new ArrayList<>();
+    List<String[]> totalHands = new ArrayList<>();
 
 
     public PokerGame(int listLength){
@@ -18,9 +19,55 @@ public class PokerGame {
         numOfHands.add(0);
         numOfHands.add(0);
         rankOfHands = new int[listLength];
+    }
+
+    public void addHand (String[] cards, int bid){
+        //this is where the hand gets added to the poker game
+        totalHands.add(cards);
+        totalBids.add(bid);
+        List<Integer> card = countCardAppearance(cards);
+        handType(card);
 
     }
 
+    public List<Integer> countCardAppearance(String[] cards) {
+        //15 unique cards
+        int[] count = new int[15];
+        for (String card : cards){
+            int value = cardValue(card,false);
+            count[value]++;
+        }
+        List<Integer> removeZero = new ArrayList<>();
+        //since the list contains integers of 0's, we have to ignore them
+        for (int num : count){
+            if (num > 0){
+                removeZero.add(num);
+            }
+        }
+
+        return removeZero;
+    }
+    public void handType(List<Integer> numOfNums){
+        if (checkFiveKind(numOfNums)){
+            return;
+        }
+        if (checkFourKind(numOfNums)){
+            return;
+        }
+        if (checkFullHouse(numOfNums)){
+            return;
+        }
+        if (checkThreeKind(numOfNums)){
+            return;
+        }
+        if (checkTwoPair(numOfNums)){
+            return;
+        }
+        if (checkOnePair(numOfNums)){
+            return;
+        }
+        checkHighCard(numOfNums);
+    }
     public boolean checkFiveKind(List<Integer> numOfNums){
         if (numOfNums.contains(5)){
             numOfHands.set(0, numOfHands.getFirst() + 1);
@@ -113,6 +160,29 @@ public class PokerGame {
         return false;
     }
 
+    public int cardValue(String card, boolean wild){
+        //boolean wild is prep for part 3
+        if (card.equals("Ace")) {
+            return 14;
+        }
+        if (card.equals("King")) {
+            return 13;
+        }
+        if (card.equals("Queen")) {
+            return 12;
+        }
+        if (card.equals("Jack")) {
+            if (wild) {
+                return 1;
+            } else {
+                return 11;
+            }
+        }
+        if (card.equals("10")) {
+            return 10;
+        }
+        return Integer.parseInt(card);
+    }
 
 
     // --------------------------------------------------------------------------------
