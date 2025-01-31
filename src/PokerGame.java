@@ -274,7 +274,6 @@ public class PokerGame {
             if (handTypes.get(i) == 7) {
                 rankOfHands.add(unorganizedHands.get(i));
                 fiveOfKinds.add(unorganizedHands.get(i));
-                System.out.println("FIVE OF KINDS BEING ADDED: " + fiveOfKinds);
             }
 
         }
