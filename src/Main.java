@@ -32,6 +32,8 @@ public class Main {
             System.out.println("Number of two pair hands: " + game.numOfHands.get(4));
             System.out.println("Number of one pair hands: " + game.numOfHands.get(5));
             System.out.println("Number of high card hands: " + game.numOfHands.get(6));
+            System.out.println("Total Bid Value: " + game.totalValue);
+            System.out.println("Total Bid Value With Jacks Wild: " + game.wildValue);
         }
         catch (FileNotFoundException e){
             System.out.println("File not found");
