@@ -1,7 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.Collections;
 
 public class PokerGame {
     String currentHand = " ";
@@ -24,6 +24,14 @@ public class PokerGame {
     List<List<String>> twoPairs = new ArrayList<>();
     List<List<String>> onePairs = new ArrayList<>();
     List<List<String>> highCards = new ArrayList<>();
+    List<Integer> rankOfHandsHelper;
+    int numOfFiveKind = 0;
+    int numOfFourKind = 0;
+    int numOfFullHouse = 0;
+    int numOfThreeKind = 0;
+    int numOfTwoPair = 0;
+    int numOfOnePair = 0;
+    int numOfHighCard = 0;
 
 
     public PokerGame(int listLength){
@@ -37,6 +45,7 @@ public class PokerGame {
         rankOfHands = new ArrayList<>();
         numOfNums = new ArrayList<>();
         rankOfHands2 = new int[listLength];
+        rankOfHandsHelper = new ArrayList<>();
     }
 
     public List<Integer> countCards(List<String> hand){
@@ -98,6 +107,7 @@ public class PokerGame {
             numOfHands.set(0, numOfHands.getFirst() + 1);
             mostRecentHand = currentHand;
             currentHand = "FIVEKIND";
+            numOfFiveKind++;
             return true;
         }
         return false;
@@ -108,6 +118,7 @@ public class PokerGame {
             numOfHands.set(1, numOfHands.get(1) + 1);
             mostRecentHand = currentHand;
             currentHand = "FOURKIND";
+            numOfFourKind++;
             return true;
         }
         return false;
@@ -119,6 +130,7 @@ public class PokerGame {
                 numOfHands.set(2, numOfHands.get(2) + 1);
                 mostRecentHand = currentHand;
                 currentHand = "FULLHOUSE";
+                numOfFullHouse++;
                 return true;
             }
         }
@@ -131,6 +143,7 @@ public class PokerGame {
                 numOfHands.set(3, numOfHands.get(3) + 1);
                 mostRecentHand = currentHand;
                 currentHand = "THREEKIND";
+                numOfThreeKind++;
                 return true;
             }
         }
@@ -148,6 +161,7 @@ public class PokerGame {
             numOfHands.set(4, numOfHands.get(4) + 1);
             mostRecentHand = currentHand;
             currentHand = "TWOPAIR";
+            numOfTwoPair++;
             return true;
         }
         return false;
@@ -164,6 +178,7 @@ public class PokerGame {
             numOfHands.set(5, numOfHands.get(5) + 1);
             mostRecentHand = currentHand;
             currentHand = "ONEPAIR";
+            numOfOnePair++;
             return true;
         }
         return false;
@@ -180,6 +195,7 @@ public class PokerGame {
             numOfHands.set(6, numOfHands.get(6) + 1);
             mostRecentHand = currentHand;
             currentHand = "HIGHCARD";
+            numOfHighCard++;
             return true;
         }
         return false;
@@ -317,37 +333,39 @@ public class PokerGame {
     }
 
 
-//    public void organizeListByFirst(){
-////        System.out.println("five of kinds list: " + fiveOfKinds);
-////        if (!fiveOfKinds.isEmpty()){
-////            int highestFive = 0;
-////            List<String> highestFiveList = new ArrayList<>();
-////            while (!fiveOfKinds.isEmpty()){
-////                for (int l = 0; l < fiveOfKinds.size(); l++){
-////                    if (l == 0){
-////                        highestFive = cardValue(fiveOfKinds.getFirst().getFirst(), false);
-////                    }
-////                    else{
-////                        if (cardValue(fiveOfKinds.get(l).getFirst(), false) > highestFive){
-////                            highestFive = cardValue(fiveOfKinds.get(l).getFirst(), false);
-////                            highestFiveList = fiveOfKinds.get(l);
-////                        }
-////                    }
-////
-////                }
-////                highestFive = 0;
-////                organizedHandTypes.add(highestFiveList);
-////                fiveOfKinds.remove(highestFiveList);
-////            }
-////        }
-////        System.out.println(organizedHandTypes);
-//
+    public void organizeListByFirst(){
+
+        // FiveOfKind
+        int five = numOfFiveKind;
+        ArrayList<String>[] fiveOfKindArray = new ArrayList[five];
+
+        for (int i = 0; i < five; i++){
+            fiveOfKindArray[i] = (ArrayList<String>) fiveOfKinds.get(i);
+        }
+
+        System.out.println(Arrays.toString(fiveOfKindArray));
+
+        // Four
+
+        int four = numOfFourKind - 1;
+        ArrayList<String>[] fourOfKindArray = new ArrayList[four];
+
+        for (int l = 0; l < four; l++){
+            fourOfKindArray[l] = (ArrayList<String>) fourOfKinds.get(l);
+        }
+
+        System.out.println(Arrays.toString(fourOfKindArray));
+
+
+
+        System.out.println(organizedHandTypes);
+
 //        for (int i = 0; i < organizedHandTypes.size(); i++){
 //            if (organizedHandTypes.get(i).contains("Jack")){
 //
 //            }
 //        }
-//    }
+    }
 
 
 
