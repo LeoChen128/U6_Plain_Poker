@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -35,7 +34,6 @@ public class Main {
             System.out.println("Number of high card hands: " + game.numOfHands.get(6));
             game.getTotalValue();
             System.out.println("Total Bid Value: " + game.totalValue);
-//            game.organizeListByFirst();
             System.out.println("Total Bid Value With Jacks Wild: " + game.wildValue);
         }
         catch (FileNotFoundException e){
