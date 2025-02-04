@@ -10,7 +10,6 @@ public class PokerGame {
     List<List<String>> rankOfHands;
     List<Integer> numOfNums;
     List<Double> handTypes = new ArrayList<>();
-    int[] rankOfHands2;
     List<Integer> totalBids = new ArrayList<>();
     List<String[]> totalHands = new ArrayList<>();
     List<List<String>> unorganizedHands = new ArrayList<>();
@@ -44,7 +43,7 @@ public class PokerGame {
         numOfHands.add(0);
         rankOfHands = new ArrayList<>();
         numOfNums = new ArrayList<>();
-        rankOfHands2 = new int[listLength];
+
         rankOfHandsHelper = new ArrayList<>();
     }
 
@@ -332,6 +331,19 @@ public class PokerGame {
 
     }
 
+    public ArrayList<String>[] bubbleSort(ArrayList<String>[] hands){
+        for(int m = 0; m < hands.length - 1; m++){
+            for(int a = 0; a < hands.length - m - 1; a++){
+                if(cardValue(hands[a].getFirst(), false) > cardValue(hands[a+1].getFirst(), false)){
+                    ArrayList<String> temp = hands[a];
+                    hands[a] = hands[a+1];
+                    hands[a+1] = temp;
+                }
+            }
+        }
+        return hands;
+    }
+
 
     public void organizeListByFirst(){
 
@@ -342,6 +354,8 @@ public class PokerGame {
         for (int i = 0; i < five; i++){
             fiveOfKindArray[i] = (ArrayList<String>) fiveOfKinds.get(i);
         }
+
+        fiveOfKindArray = bubbleSort(fiveOfKindArray);
 
         System.out.println(Arrays.toString(fiveOfKindArray));
 
@@ -354,11 +368,88 @@ public class PokerGame {
             fourOfKindArray[l] = (ArrayList<String>) fourOfKinds.get(l);
         }
 
+        fourOfKindArray = bubbleSort(fourOfKindArray);
+
         System.out.println(Arrays.toString(fourOfKindArray));
 
 
+        // Full
 
-        System.out.println(organizedHandTypes);
+        int fullHouse = numOfFullHouse - 1;
+        ArrayList<String>[] fullHouseArray = new ArrayList[fullHouse];
+
+        for (int l = 0; l < fullHouse; l++){
+            fullHouseArray[l] = (ArrayList<String>) fullHouses.get(l);
+        }
+
+        fullHouseArray = bubbleSort(fullHouseArray);
+
+        System.out.println(Arrays.toString(fullHouseArray));
+
+
+
+        // Three
+
+        int three = numOfThreeKind - 1;
+        ArrayList<String>[] threeOfKindArray = new ArrayList[three];
+
+        for (int l = 0; l < three; l++){
+            threeOfKindArray[l] = (ArrayList<String>) threeOfKinds.get(l);
+        }
+
+        threeOfKindArray = bubbleSort(threeOfKindArray);
+
+        System.out.println(Arrays.toString(threeOfKindArray));
+
+
+        // Two
+
+        int two = numOfTwoPair -1;
+        ArrayList<String>[] twoPairArray = new ArrayList[two];
+
+
+        for (int l = 0; l < two; l++) {
+            twoPairArray[l] = (ArrayList<String>) twoPairs.get(l);
+            System.out.println("ITERATION: " + l);
+            System.out.println("ARRAY: " + Arrays.toString(twoPairArray));
+        }
+
+
+
+        
+        twoPairArray = bubbleSort(twoPairArray);
+
+
+
+        System.out.println(Arrays.toString(twoPairArray));
+
+
+        // One Pair
+
+        int one = numOfOnePair - 1;
+        ArrayList<String>[] onePairArray = new ArrayList[one];
+
+        for (int l = 0; l < one; l++){
+            onePairArray[l] = (ArrayList<String>) onePairs.get(l);
+        }
+
+        onePairArray = bubbleSort(onePairArray);
+
+        System.out.println(Arrays.toString(onePairArray));
+
+
+        // High Card
+
+        int high = numOfHighCard - 1;
+        ArrayList<String>[] highCardArray = new ArrayList[high];
+
+        for (int l = 0; l < high; l++){
+            highCardArray[l] = (ArrayList<String>) highCards.get(l);
+        }
+
+        highCardArray = bubbleSort(highCardArray);
+
+        System.out.println(Arrays.toString(highCardArray));
 
 //        for (int i = 0; i < organizedHandTypes.size(); i++){
 //            if (organizedHandTypes.get(i).contains("Jack")){
