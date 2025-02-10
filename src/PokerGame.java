@@ -168,25 +168,22 @@ public class PokerGame {
         return 1; //high card
     }
 
-    public int compareHands(String[] hand1, String[] hand2, boolean useWildJacks) {
+    public int compareHands(String[] hand1, String[] hand2, boolean wildJack) {
         //compare hand types
-        int type1 = getHandType(hand1, useWildJacks);
-        int type2 = getHandType(hand2, useWildJacks);
-
+        int type1 = getHandType(hand1, wildJack);
+        int type2 = getHandType(hand2, wildJack);
         if (type1 != type2) {
             return type1 - type2;
         }
 
         //compare cards
         for (int i = 0; i < 5; i++) {
-            int value1 = getCardValue(hand1[i], useWildJacks);
-            int value2 = getCardValue(hand2[i], useWildJacks);
-
+            int value1 = getCardValue(hand1[i], wildJack);
+            int value2 = getCardValue(hand2[i], wildJack);
             if (value1 != value2) {
                 return value1 - value2;
             }
         }
-
         return 0;
     }
 
@@ -212,17 +209,17 @@ public class PokerGame {
         }
     }
 
-    public void bubbleSort(List<Integer> indices, boolean useWildJacks) {
-        int n = indices.size();
+    public void bubbleSort(List<Integer> list, boolean useWildJacks) {
+        int n = list.size();
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                String[] hand1 = hands.get(indices.get(j));
-                String[] hand2 = hands.get(indices.get(j + 1));
+                String[] hand1 = hands.get(list.get(j));
+                String[] hand2 = hands.get(list.get(j + 1));
 
                 if (compareHands(hand1, hand2, useWildJacks) > 0) {
-                    int temp = indices.get(j);
-                    indices.set(j, indices.get(j + 1));
-                    indices.set(j + 1, temp);
+                    int temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
                 }
             }
         }
